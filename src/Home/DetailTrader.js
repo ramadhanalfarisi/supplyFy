@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   Slider,
   Animated,
+  Alert,
 } from 'react-native';
 import StarRating from 'react-native-star-rating';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -48,13 +49,27 @@ class DetailTrader extends Component {
     }).start();
   }
   pesanKomoditas() {
-    let komoditas = this.state.maksValue - this.state.sliderValue;
-    this.setState({sliderValue: 0, maksValue: komoditas});
-    this.slider.setNativeProps({value: 0});
-    Animated.spring(this.topModal, {
-      toValue: 1000,
-      friction: 7,
-    }).start();
+    Alert.alert(
+      'Pesan Komoditas',
+      'Apakah anda yakin ingin memsan komoditas ini',
+      [
+        {
+          text: 'Iya',
+          onPress: () => {
+            let komoditas = this.state.maksValue - this.state.sliderValue;
+            this.setState({sliderValue: 0, maksValue: komoditas});
+            this.slider.setNativeProps({value: 0});
+            Animated.spring(this.topModal, {
+              toValue: 1000,
+              friction: 7,
+            }).start();
+          },
+        },
+        {
+          text: 'Tidak',
+        },
+      ],
+    );
   }
   render() {
     return (
